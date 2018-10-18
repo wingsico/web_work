@@ -1,0 +1,435 @@
+
+body {
+  font-family: "Helvetica Neue", "Arial", "PingFang SC", "Hiragino Sans GB", "STHeiti", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+    background: #f5f5f5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* 
+  内容区域
+*/
+.container {
+  width: 976px;
+  min-width: 320px;
+  height: 100%;
+  background-color: #fff;
+  margin: 20px auto;
+  box-shadow: 5px 5px 10px -5px #000,
+              -5px 5px 10px -5px #000,
+              0 5px 10px -5px #000;
+}
+
+@media (max-width: 1023px) {
+  .container {
+    max-width: 798px;
+  }
+}
+
+@media (max-width: 797px) {
+  .container {
+    width: auto;
+    margin: 0;
+  }
+}
+
+
+/*
+  顶部header
+*/
+header {
+  background-image: linear-gradient(45deg, #499DFF 50%, #333 50%);
+  overflow: hidden;
+  color: #fff;
+  padding: 40px;
+}
+
+@media (max-width: 797px) {
+  header {
+    padding: 15px;
+  }
+}
+    
+.title {
+  text-align: center;
+  padding: 10px 0;
+}
+
+.title .name {
+  font-size: 60px;
+  margin: 0;
+}
+
+.title .desc {
+  letter-spacing: 10px;
+}
+
+@media (max-width: 548px) {
+  .title .desc {
+    font-size: 15px;  
+  }
+}
+
+.title .desc::after,
+.title .desc::before {
+  content: '——';
+  display: inline-block;
+  letter-spacing: normal;
+}
+
+.title .desc::before {
+  margin-right: 15px;
+}
+
+.title .desc::after {
+  margin-left: 5px;
+}
+
+.qr-code {
+  margin: 0 15px 10px 0;
+  float: left;
+  width: 100px;
+  height: 100px;
+}
+
+@media (max-width: 797px) {
+  .qr-code {
+    display: inline-block;
+  }
+}
+
+.qr-code img {
+  height: 100%;
+  width: 100%;
+}
+
+.avatar {
+  margin: 0;
+  float: right;
+  cursor: pointer;
+  transition: transform 1s;
+}
+
+.avatar:hover {
+  transform: rotate(360deg);
+}
+
+.avatar img {
+  width: 100px;
+  height: auto;
+  border-radius: 50%;
+}
+
+.address {
+  float: left;
+  height: 100px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+@media (max-width: 603px) {
+  .qr-code {
+    margin-bottom: 0;;
+  }
+  .address {
+    display: inline-block;
+  }
+}
+
+@media (max-width: 548px) {
+  .address {
+    margin-top: 15px;
+  }
+}
+
+.address dl {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0;
+  height: 100%;
+}
+
+.address dl > dd {
+  margin-left: 0;
+}
+
+.address .address-type {
+  font-variant: small-caps;
+  margin-left: 5px;
+}
+
+.address .address-value {
+  position: relative;
+  z-index: 2;
+}
+
+.address .link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #fff;
+  transition: width 0.5s;
+  z-index: 1;
+}
+
+.address .link:hover::after {
+  width: 100%;
+}
+
+.address .address-value a {
+  color: #fff;
+  text-decoration: none;
+}
+
+/*
+  内容区域
+*/
+.content {
+  padding: 25px 40px;
+}
+
+@media (max-width: 415px) {
+  .content {
+    padding: 25px 10px;
+  } 
+}
+
+.content::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.content .column-6 {
+  float: left;
+  box-sizing: border-box;
+}
+
+.content .column {
+  padding-left: 15px;
+}
+
+@media (min-width: 1024px) {
+  .column-6 {
+    float: left;
+    width: 50%; } }
+
+@media (max-width: 1023px) {
+  .column-6 {
+    width: 100%;
+    padding-left: 0 !important; } }
+
+.education .education-name {
+  font-size: 30px;
+}
+
+.education .timeline-wrapper .timeline-title time {
+  font-size: 17px;
+  float: none;
+}
+
+.language .sec-content {
+  margin: 0 0 10px 20px;
+}
+
+.language .language-cert-wrapper {
+  display: flex;
+  margin-bottom: 10px;
+  line-height: 1.33;
+}
+
+.language .language-cert-type {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+  margin-right: 15px;
+}
+
+.language .progress {
+  display: inline-block;
+  flex: 1;
+  background-color: #333;
+  border-radius: 5px;
+  margin-left: 10px;
+  margin-right: 15px;
+}
+
+
+.language .progress-bar {
+  display: inline-block;
+  border-radius: 5px;
+  color: #fff;
+  height: 100%;
+  text-align: right;
+  background-color: #499DFF;
+}
+
+.language .progress-label {
+  display: inline-block;
+  height: 100%;
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.language .language-skills {
+  list-style-type: none;
+  padding: 0;
+  line-height: 1.4;
+}
+
+.language .language-skills > li.iconfont::before {
+  margin-right: 5px;
+}
+
+
+footer {
+  text-align: center;
+}
+
+footer p {
+  width: 80%;
+  margin: 20px auto;
+}
+
+footer strong {
+  color: #499DFF;
+}
+
+/*
+  通用配置
+*/
+.sec-title-wrapper {
+  display: flex;
+}
+
+.sec-title-wrapper.iconfont {
+  font-size: 30px;
+  position: relative;
+  z-index: 111;
+}
+
+.sec-title-wrapper.iconfont::before {
+  background: #333;
+  color: #fff;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sec-title-wrapper .sec-title {
+  float: left;
+  margin: 0 0 0 10px;
+  padding: 0;
+  font-size: 20px;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sec-title-wrapper .sec-title .sec-zh {
+  float: left;
+  letter-spacing: -1px;
+}
+
+.sec-title-wrapper .sec-title .sec-en {
+  float: left;
+  clear: left;
+  font-variant: small-caps;
+  color: #499DFF;
+  font-weight: bold;
+}
+
+.timeline-wrapper {
+  margin-top: -20px;
+  position: relative;
+}
+
+.timeline-wrapper::after {
+  float: left;
+  width: 0;
+  height: 0;
+  margin-top: -25px;
+  margin-left: 17px;
+  content: "";
+  border: 8px solid #333;
+  border-radius: 100%;
+}
+
+.timeline-wrapper ul {
+  padding: 20px 0 0 0;
+  margin-left: 22px;
+  border-left: 5px solid #333;
+  list-style-type: none;
+}
+
+.timeline-title {
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.33;
+  margin: 0;
+  padding: 2px 0 2px 28px;
+  color: #fff;
+  border-radius: 5px;
+  background: #333;
+}
+
+.timeline-title::after {
+  content: '';
+  display: inline-block;
+  clear: both;
+}
+
+.timeline-title time {
+  margin-right: 12px;
+  font-size: 15px;
+  float: right;
+}
+
+.timeline-item.iconfont::before {
+  width: 36px;
+  height: 36px;
+  margin-left: -20px;
+  color: #fff;
+  font-size: 20px;
+  background-color: #499DFF;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 36px;
+  float: left;
+  margin-top: -5px;
+}
+
+.timeline-item > dl {
+  padding-left: 22px;
+}
+
+.timeline-item > dl strong {
+  color: #499DFF;
+}
+
+.timeline-item dl > dd {
+  margin-left: 0;
+  line-height: 1.5;
+  font-size: 15px;
+}
+
+.timeline-item dl > dd.iconfont::before {
+  margin-right: 5px;
+  font-size: 20px;
+  vertical-align: middle;
+}
+
+.timeline-item dl > dt {
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom:10px;
+}
+
