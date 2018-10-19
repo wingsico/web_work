@@ -5,60 +5,23 @@ window.spc = (function () {
    *  config
    *
    */
-  const config = {
+  let config = {
     languages: [
       'zh', 'en'
     ],
     flatDays: [
-      31,
-      28,
-      31,
-      30,
-      31,
-      30,
-      31,
-      31,
-      30,
-      31,
-      30,
-      31
+      31,28,31,30,31,30,31,31,30,31,30,31
     ],
     leapDays: [
-      31,
-      29,
-      31,
-      30,
-      31,
-      30,
-      31,
-      31,
-      30,
-      31,
-      30,
-      31
+      31,29,31,30,31,30,31,31,30,31,30,31
     ],
-    ['zh-weeks']: [
-      '日',
-      '一',
-      '二',
-      '三',
-      '四',
-      '五',
-      '六'
-    ],
-    ['en-weeks']: [
-      'Sun',
-      'Mon',
-      'Tue',
-      'Wed',
-      'Thur',
-      'Fri',
-      'Sar'
-    ],
+    ['zh-weeks']: ['日','一','二','三','四','五','六'],
+    ['en-weeks']: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
+    months: ['Jan', 'Feb', 'Mar', 'Apr', 'May' ,'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     mainWrapperCn: 'spc-wrapper',
     headerWrapperCn: 'spc-header',
     bodyWrapperCn: 'spc-body',
-    currentLanguage: 'zh'
+    currentLanguage: 'en',
   }
 
   /**
@@ -138,10 +101,10 @@ window.spc = (function () {
     const yearWrapperCn = dateItemWrapperCn('year')
     const monthWrapperCn = dateItemWrapperCn('month')
 
-    const wrapper = document.createElement('div');
+    const wrapper = document.createElement('span');
 
     const children = `
-      <span class="${yearWrapperCn}"></span>-<span class="${monthWrapperCn}"></span>
+    <span class="${monthWrapperCn}"></span>&nbsp; <span class="${yearWrapperCn}"></span>
     `
 
     wrapper
@@ -158,9 +121,9 @@ window.spc = (function () {
 
     const wrapper = document.createElement('div');
     const children = `
-      <i class="${headerItemWrapperCn('dec')}"><</i>
+      <span class="${headerItemWrapperCn('dec')} spc-icon spc-icon-left"></span>
       ${_DOMToString(_generateCalendarHeaderDate(headerWrapperCn))}
-      <i class="${headerItemWrapperCn('inc')}">></i>
+      <span class="${headerItemWrapperCn('inc')} spc-icon spc-icon-right"></span>
     `
 
     wrapper.innerHTML = children;
@@ -179,7 +142,7 @@ window.spc = (function () {
     const table = document.createElement('table')
     const bodyWeek = `
       <tr class="${bodyTableTrCn('week')}">
-      ${config[`${currentLanguage}-weeks`].map(text => `<th>${text}</th>`).join('')}
+      ${config[`${currentLanguage}-weeks`].map(text => `<td>${text}</td>`).join('')}
       </tr>
     `
 
@@ -215,6 +178,18 @@ window.spc = (function () {
     return wrapper;
   }
 
+  const _generateCalendar = () => {
+    const header = _generateCalendarHeader();
+    const body = _generateCalendarBody();
+    const wrapper = document.createElement('div');
+
+    wrapper.classList.add(config.mainWrapperCn);
+    wrapper.appendChild(header);
+    wrapper.appendChild(body);
+
+    return wrapper;
+  }
+
 
   
   /**
@@ -222,10 +197,8 @@ window.spc = (function () {
    */
 
   const _renderHTML = (mountedEle) => {
-    const header = _generateCalendarHeader();
-    const body = _generateCalendarBody();
-    mountedEle.appendChild(header);
-    mountedEle.appendChild(body);
+    const calendar = _generateCalendar();
+    mountedEle.appendChild(calendar);
   }
 
   const _renderData = () => {
@@ -233,43 +206,52 @@ window.spc = (function () {
     const calHeaderDateYear = document.querySelector('.spc-header__date-year');
     const calHeaderDateMonth = document.querySelector('.spc-header__date-month');
     const calBodyTable = document.querySelector('.spc-body__table');
-    const calBodyTableCells = calBodyTable.querySelectorAll('td');
+    const calBodyTableCells = calBodyTable.querySelectorAll('.spc-body__table-line td');
 
     // 获取当前选中日期
     const date = dateObj.getDate();
     const resolvedDate = _resolveDate(date)
     const { year, month } = resolvedDate;
+
+    // 今日日期
     const { year: cYear, month: cMonth, day: cDay } = _resolveDate(new Date());
 
     // 设置顶部日期
     calHeaderDateYear.innerText = year;
-    calHeaderDateMonth.innerText = month + 1 >= 10 ? month + 1 : `0${month + 1}`;
+    calHeaderDateMonth.innerText = config.months[(month + 12)%12];
     
     // 设置表格中的日期数据
     
     const dayOfWeekAboutFirstDayThisMonth = _resolveDate(new Date(year, month, 1)).week;
-    const lastMonthDays = _getMonthDays(year, month - 1);
-    const curMonthDays = _getMonthDays(year, month);
+    const lastMonthDays = _getMonthDays(year, month - 1); // 上个月的天数
+    const thisMonthDays = _getMonthDays(year, month); // 这个月的天数
 
-    let curDay = (lastMonthDays - dayOfWeekAboutFirstDayThisMonth) % lastMonthDays + 1;
-    calBodyTableCells.forEach((cell, index) => {
-      if (index < dayOfWeekAboutFirstDayThisMonth) {
-        cell.classList.add('other-month')
-      }
+    // 第一格的日期值
+    const _f = (lastMonthDays - dayOfWeekAboutFirstDayThisMonth) % lastMonthDays + 1;
+    console.log(_f + ',' + dayOfWeekAboutFirstDayThisMonth);
+    // 当前格子的日期值 默认为第一格的日期值
+    let curTableCellDate = _f;
 
-      if (index === dayOfWeekAboutFirstDayThisMonth) {
-        curDay = 1;
-      }
+    // 简写
+    let _d = dayOfWeekAboutFirstDayThisMonth;
+    let _l = lastMonthDays;
+    let _c = curTableCellDate;
+    let _t = thisMonthDays;
 
-      cell.innerText = curDay;
-      cell.classList.add('cur-month')
-      curDay === cDay && month === cMonth && year === cYear && cell.classList.add('today');
-      curDay += 1;
+    calBodyTableCells.forEach((cell, _i) => {
+      cell.classList.remove('o-month', 'today');
+
+      // 非本月
+      (_i < _d || _i >= _d + _t) && cell.classList.add('o-month');
+
+      // 当前格子的日期值
       
-      if (!cell.classList.contains('other-month') && curDay > curMonthDays) {
-        curDay = 1;
-        cell.classList.add('other-month')
-      }
+      _c = _i + _d === 0 ? 1 : _i < _d ? _f + _i : ((_i < _d + _t)  ? _f + _i - (_d === 0 ? 0: _l) : _f + _i - _l - _t);
+
+      // 是否为今日
+      _c === cDay && month === cMonth && year === cYear && cell.classList.add('today');
+      
+      cell.innerText = _c;
     })
   }
 
