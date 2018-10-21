@@ -234,7 +234,7 @@ window.spc = (function () {
 
     // 简写
     let _d = dayOfWeekAboutFirstDayThisMonth;
-    let _l = lastMonthDays;
+    let _l = _d === 0 ? 0 : lastMonthDays;
     let _c = curTableCellDate;
     let _t = thisMonthDays;
 
@@ -246,7 +246,7 @@ window.spc = (function () {
 
       // 当前格子的日期值
       
-      _c = _i + _d === 0 ? 1 : _i < _d ? _f + _i : ((_i < _d + _t)  ? _f + _i - (_d === 0 ? 0: _l) : _f + _i - _l - _t);
+      _c = _i + _d === 0 ? 1 : _i < _d ? _f + _i : ((_i < _d + _t)  ? _f + _i - _l : _f + _i - _l - _t);
 
       // 是否为今日
       _c === cDay && month === cMonth && year === cYear && cell.classList.add('today');
