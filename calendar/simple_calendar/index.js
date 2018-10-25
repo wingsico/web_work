@@ -268,7 +268,7 @@ window.spc = (function () {
 
     // 第一格的日期值
     const _f = (lastMonthDays - dayOfWeekAboutFirstDayThisMonth) % lastMonthDays + 1;
-    console.log(_f + ',' + dayOfWeekAboutFirstDayThisMonth);
+
     // 当前格子的日期值 默认为第一格的日期值
     let curTableCellDate = _f;
 
@@ -357,6 +357,8 @@ window.spc = (function () {
 
     // 事件绑定
     _bindEvents();
+
+    // css load 暂未解决
 
   }
 
