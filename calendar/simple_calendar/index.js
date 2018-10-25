@@ -21,7 +21,17 @@ window.spc = (function () {
     mainWrapperCn: 'spc-wrapper',
     headerWrapperCn: 'spc-header',
     bodyWrapperCn: 'spc-body',
-    currentLanguage: 'en',
+    defaultLanguage: 'en',
+  }
+
+  let custom = {
+    // language: 'en' | 'zh',
+    // theme: '$color',
+    // headerHeight: '100px'
+    // width: '300px'
+    // headerFontSize: '20px'
+    // bodyFontSize: '10px'
+    // bodyPadding: '10px',
   }
 
   /**
@@ -39,6 +49,16 @@ window.spc = (function () {
       }
     }
   })()
+
+
+  /**
+   *  utils
+   */
+
+  const _updateCustomOptions = (options) => {
+    custom = Object.assign(custom, options)
+  }
+
 
   const _curry = (f, arr = []) => (...args) => (a => a.length === f.length
     ? f(...a)
@@ -72,7 +92,7 @@ window.spc = (function () {
 
   const _weekNumberToText = (weekNumber) => {
     const _weekNumber = parseInt(weekNumber);
-    return config[`${config.currentLanguage}-weeks`][_weekNumber];
+    return config[`${custom.language || config.defaultLanguage }-weeks`][_weekNumber];
   }
 
   const _isLeapYear = (year) => {
@@ -95,6 +115,7 @@ window.spc = (function () {
   */
 
   const _generateCalendarHeaderDate = (parentCn) => {
+    const { language } = custom;
     const dateWrapperCn = _generateChildrenClassName(parentCn, 'date');
     const dateItemWrapperCn = _generateChildrenClassName(dateWrapperCn);
 
@@ -103,9 +124,11 @@ window.spc = (function () {
 
     const wrapper = document.createElement('span');
 
-    const children = `
+    const _lg = language || config.defaultLanguage;
+
+    const children = _lg === 'en' ? `
     <span class="${monthWrapperCn}"></span>&nbsp; <span class="${yearWrapperCn}"></span>
-    `
+    ` : `<span class="${yearWrapperCn}"></span> 年 <span class="${monthWrapperCn}"></span> 月`
 
     wrapper
       .classList
@@ -116,7 +139,8 @@ window.spc = (function () {
   }
 
   const _generateCalendarHeader = (date) => {
-    const {headerWrapperCn} = config;
+    const { headerWrapperCn } = config;
+    const { theme, headerHeight, headerFontSize } = custom;
     const headerItemWrapperCn = _generateChildrenClassName(headerWrapperCn);
 
     const wrapper = document.createElement('div');
@@ -130,19 +154,24 @@ window.spc = (function () {
     wrapper
       .classList
       .add(headerWrapperCn);
+  
+    theme && (wrapper.style.backgroundColor = theme);
+    headerHeight && (wrapper.style.height = headerHeight);
+    headerFontSize && (wrapper.style.fontSize = headerFontSize);
     return wrapper;
   }
 
   const _generateCalendarBody = () => {
-    const {bodyWrapperCn, currentLanguage} = config;
+    const { bodyWrapperCn , defaultLanguage} = config;
+    const { language, theme, bodyFontSize, bodyPadding } = custom;
     const bodyTableWrapperCn = _generateChildrenClassName(bodyWrapperCn, 'table');
     const bodyTableTrCn = _generateChildrenClassName(bodyTableWrapperCn);
 
     const wrapper = document.createElement('div');
     const table = document.createElement('table')
     const bodyWeek = `
-      <tr class="${bodyTableTrCn('week')}">
-      ${config[`${currentLanguage}-weeks`].map(text => `<td>${text}</td>`).join('')}
+      <tr class="${bodyTableTrCn('week')}" style="${theme && `color: ${theme}`}">
+      ${config[`${language || defaultLanguage}-weeks`].map(text => `<td><span>${text}</span></td>`).join('')}
       </tr>
     `
 
@@ -155,13 +184,13 @@ window.spc = (function () {
     for (let i = 0; i < lines; i++) {
       bodyDays += `
         <tr class="${bodyTableTrCn('line')}">
-          <td class="weekend"></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td class="weekend"></td>
+          <td class="weekend"><span></span></td>
+          <td><span></span></td>
+          <td><span></span></td>
+          <td><span></span></td>
+          <td><span></span></td>
+          <td><span></span></td>
+          <td class="weekend"><span></span></td>
         </tr>
       `
     }
@@ -171,14 +200,19 @@ window.spc = (function () {
       .add(bodyTableWrapperCn);
     table.innerHTML = bodyWeek + bodyDays;
 
+
     wrapper
       .classList
       .add(bodyWrapperCn);
     wrapper.append(table)
+
+    bodyFontSize && (wrapper.style.fontSize = fontSize);   
+    bodyPadding && (wrapper.style.padding = bodyPadding);
     return wrapper;
   }
 
   const _generateCalendar = () => {
+    const { width, shadow } = custom;
     const header = _generateCalendarHeader();
     const body = _generateCalendarBody();
     const wrapper = document.createElement('div');
@@ -187,6 +221,8 @@ window.spc = (function () {
     wrapper.appendChild(header);
     wrapper.appendChild(body);
 
+    width && (wrapper.style.width = width);
+    shadow && (wrapper.style.boxShadow = shadow);
     return wrapper;
   }
 
@@ -202,6 +238,8 @@ window.spc = (function () {
   }
 
   const _renderData = () => {
+
+    const { theme, language } = custom;
     // 获取渲染标签所需DOMs
     const calHeaderDateYear = document.querySelector('.spc-header__date-year');
     const calHeaderDateMonth = document.querySelector('.spc-header__date-month');
@@ -216,9 +254,11 @@ window.spc = (function () {
     // 今日日期
     const { year: cYear, month: cMonth, day: cDay } = _resolveDate(new Date());
 
+    const _lg = language || config.defaultLanguage;
+
     // 设置顶部日期
     calHeaderDateYear.innerText = year;
-    calHeaderDateMonth.innerText = config.months[(month + 12)%12];
+    calHeaderDateMonth.innerText = _lg === 'en' ? config.months[(month + 12) % 12] : month + 1;
     
     // 设置表格中的日期数据
     
@@ -249,9 +289,12 @@ window.spc = (function () {
       _c = _i + _d === 0 ? 1 : _i < _d ? _f + _i : ((_i < _d + _t)  ? _f + _i - _l : _f + _i - _l - _t);
 
       // 是否为今日
-      _c === cDay && month === cMonth && year === cYear && cell.classList.add('today');
+      if (_c === cDay && month === cMonth && year === cYear) {
+        cell.classList.add('today');
+        theme && (cell.style.backgroundColor = theme)
+      }
       
-      cell.innerText = _c;
+      cell.querySelector('span').innerText = _c;
     })
   }
 
@@ -290,21 +333,31 @@ window.spc = (function () {
     incButton.addEventListener('click', _incButtonClick)
   }
 
+
   /**
    * 初始化
    * @param {HTMLElement} mountedEle
    * @param {Object} options
    */
 
-  const _init = (mountedEle, options) => {
+  const _init = (options) => {
 
-    _checkEleVaild(mountedEle);
+    const { el } = options;
+    // 检查元素合法性
+    _checkEleVaild(el);
 
-    _renderHTML(mountedEle);
+    // 更新用户配置
+    _updateCustomOptions(options);
 
+    // 渲染DOM
+    _renderHTML(el);
+
+    // 渲染数据
     _renderData();
 
+    // 事件绑定
     _bindEvents();
+
   }
 
   return {
