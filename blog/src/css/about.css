@@ -1,0 +1,92 @@
+html,body {
+  height: 100%;
+}
+
+*,*::after, *::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.about-wrapper {
+  width: 90%;
+  margin: 0px auto 30px;
+  position: relative;
+}
+
+.about-wrapper::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.content-wrapper {
+  float: left;
+  margin-right: 360px;
+  margin-top: 30px;
+}
+
+.personal-wrapper {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 330px;
+  background: #fff;
+  padding: 30px;
+  margin-top: 30px;
+}
+
+.about-me-wrapper .title {
+  display: block;
+  color: #aaa;
+  position: relative;
+  font-size: 13px;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 400;
+  padding: 7px 10px;
+  border: 2px solid #eee;
+  z-index: 10;
+  margin-bottom: 30px;
+}
+
+.about-me-wrapper .title::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  right: -4px;
+  bottom: -4px;
+  top: 4px;
+  border-bottom: 3px solid #eee;
+  border-right: 3px solid #eee;
+  z-index: 9;
+  pointer-events: none;
+}
+
+.about-me-wrapper .intro {
+  text-align: center;
+}
+
+.intro .avatar {
+  margin-bottom: 20px;
+}
+
+.intro .avatar img {
+  width: 100%;
+  height: auto;
+}
+
+.intro .name {
+  font-weight: 500;
+  font-size: 24px;
+  letter-spacing: 2px;
+}
+
+.intro .desc {
+  font-size: 14px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: 400;
+  color: #aaa;
+  margin-top: 20px;
+}
