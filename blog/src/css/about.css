@@ -1,16 +1,44 @@
-html,body {
+html,
+body {
   height: 100%;
 }
 
-*,*::after, *::before {
+*,
+*::after,
+*::before {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+a {
+  cursor: pointer;
+  color: #ccc;
+  text-decoration: none;
+}
+
+.db-border {
+  border: 2px solid #333;
+  position: relative;
+}
+
+.db-border::after {
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  top: 2px;
+  bottom: 2px;
+  border: 1px solid;
+  border-color: inherit;
+  border-radius: inherit;
+  content: '';
+  display: block;
+  z-index: 0;
+}
+
 .about-wrapper {
-  width: 90%;
-  margin: 0px auto 30px;
+  width: 1100px;
+  margin: 30px auto;
   position: relative;
 }
 
@@ -23,7 +51,7 @@ html,body {
 .content-wrapper {
   float: left;
   margin-right: 360px;
-  margin-top: 30px;
+  padding: 0 20px;
 }
 
 .personal-wrapper {
@@ -31,12 +59,16 @@ html,body {
   right: 0;
   top: 0;
   width: 330px;
-  background: #fff;
-  padding: 30px;
-  margin-top: 30px;
 }
 
-.about-me-wrapper .title {
+.personal-wrapper>section {
+  background: #fff;
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+}
+
+.common-title {
   display: block;
   color: #aaa;
   position: relative;
@@ -51,7 +83,7 @@ html,body {
   margin-bottom: 30px;
 }
 
-.about-me-wrapper .title::after {
+.common-title::after {
   content: '';
   position: absolute;
   left: 4px;
@@ -62,6 +94,48 @@ html,body {
   border-right: 3px solid #eee;
   z-index: 9;
   pointer-events: none;
+}
+
+.posts-wrapper .list-wrapper {
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.list-wrapper ul {
+  list-style: none;
+}
+
+.list-item {
+  display: flex;
+}
+
+.list-item:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.list-item .image {
+  flex: 1;
+  margin-right: 15px;
+}
+
+.list-item .image img {
+  max-width: 100%;
+}
+
+.list-item .brief-wrapper {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0 0 5px;
+}
+
+.list-item .brief-wrapper h3 {
+  font-size: 16px;
+}
+
+.list-item .brief-wrapper .brief {
+  font-size: 14px;
+  color: #aaa;
 }
 
 .about-me-wrapper .intro {
@@ -89,4 +163,225 @@ html,body {
   font-weight: 400;
   color: #aaa;
   margin-top: 20px;
+}
+
+
+article .title {
+  border: 6px solid #333;
+}
+
+article .title h3 {
+  text-align: center;
+  margin: 10px;
+  background: #333;
+  padding: 20px 0;
+  font-size: 24px;
+  color: #fff;
+}
+
+.content-wrapper .content {
+  box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.05);
+  background: #fff;
+  padding: 20px 30px 0px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.content-wrapper .content img {
+  max-width: 100%;
+  height: auto;
+}
+
+.content-wrapper .content .desc {
+  text-align: center;
+  font-size: 14px;
+}
+
+.content-wrapper .content .words {
+  margin-top: 20px;
+}
+
+.content-wrapper .content .words p {
+  margin-bottom: 20px;
+  line-height: 1.1;
+  font-size: 16px;
+  text-align: justify;
+}
+
+.content-wrapper .content .words h4 {
+  font-size: 20px;
+}
+
+.content-wrapper .content .words hr {
+  margin: 25px 0 10px;
+}
+
+.content-wrapper .content .words ol {
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+
+.content-wrapper footer {
+  border-top: 1px dashed #ccc;
+  margin: 0 -25px;
+  padding: 15px 25px;
+}
+
+.content-wrapper footer ul {
+  list-style: none;
+  text-align: right;
+}
+
+.content-wrapper footer ul li {
+  display: inline-block;
+}
+
+.comment-wrapper {
+  margin-top: 30px;
+  background: #fff;
+  box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.05);
+  padding: 30px;
+  margin-bottom: 20px;
+}
+
+.comment-wrapper .comment-title {
+  margin-bottom: 30px;
+}
+
+.comment-title .comment-post-message {
+  margin-left: 8px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #aaa;
+  display: inline-block;
+  position: relative;
+  font-size: 13px;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 400;
+  padding: 7px 10px;
+  border: 2px solid #eee;
+  z-index: 10;
+}
+
+.comment-title .comment-post-message::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  right: -4px;
+  bottom: -4px;
+  top: 4px;
+  border-bottom: 3px solid #eee;
+  border-right: 3px solid #eee;
+  z-index: 9;
+  pointer-events: none;
+}
+
+.input-wrapper {
+  border: 1px solid #f0f0f0;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  position: relative;
+  padding: 10px;
+}
+
+.input-wrapper .input-header {
+  line-height: 2;
+  color: #555;
+  display: flex;
+}
+
+.h-input {
+  width: 33.33%;
+  float: left;
+  border: none;
+  border-bottom: 1px dashed #dedede;
+  resize: none;
+  outline: none;
+  padding: 10px 5px;
+}
+
+.editor-wrapper .editor {
+  width: 100%;
+  min-height: 200px;
+  font-size: 15px;
+  background: transparent;
+  resize: vertical;
+  border: none;
+}
+
+.editor-button {
+  padding-top: 15px;
+  text-align: right;
+  padding-right: 15px;
+}
+
+.editor-button button {
+  text-align: center;
+  color: #313131;
+  border: 1px solid #ededed;
+  border-radius: 3px;
+  display: inline-block;
+  background: #ededed;
+  margin-bottom: 0;
+  font-weight: 400;
+  vertical-align: middle;
+  cursor: pointer;
+  white-space: nowrap;
+  padding: .5em 1.25em;
+  font-size: 15px;
+  line-height: 1.1;
+  outline: none;
+}
+
+/**** media ********/
+
+@media (max-width: 1120px) {
+  .about-wrapper {
+    width: 900px;
+  }
+  .personal-wrapper {
+    width: 280px;
+  }
+
+  .content-wrapper {
+    margin-right: 300px;
+  }
+  
+}
+
+@media (max-width: 962px) {
+  .about-wrapper {
+    width: 700px;
+  }
+
+  .content-wrapper {
+    width: 100%;
+  }
+
+  .personal-wrapper {
+    position: initial;
+    float:left;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-wrapper {
+    width: 560px;
+  }
+
+  .content-wrapper {
+    padding: 0;
+  }
+
+  
+}
+
+@media (max-width: 576px) {
+  .about-wrapper {
+    width: 100%;
+    margin: 0;
+  }
 }

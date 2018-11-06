@@ -65,13 +65,18 @@
    */
 
   function globalCallback() {
-    var currentRoute = Router.getCurrent().slice(1);
-    var oldRoute = Router.getOld().slice(1);
-    var currentMenuItem = document.getElementById(currentRoute);
-    var oldMenuItem = document.getElementById(oldRoute)
-   
-    currentMenuItem && currentMenuItem.classList.add('checked')
-    oldMenuItem && oldMenuItem.classList.remove('checked')
+    var currentRoutes = Router.getCurrent().slice(1).split("/");
+    var oldRoutes = Router.getOld().slice(1).split("/");
+
+    oldRoutes.forEach(function (route) {
+      document.getElementById(route) && document.getElementById(route).classList.remove('checked');      
+    })
+    
+    currentRoutes.forEach(function (route) {
+      document.getElementById(route) && document.getElementById(route).classList.add('checked');
+    })
+
+    
 
     window.frames.partical.location.href = Router.getUrlWithoutHash() + '_particals' + Router.getCurrent() + '.html';
     setIframeHeight(iframe)

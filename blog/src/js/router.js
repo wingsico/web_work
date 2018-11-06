@@ -29,6 +29,8 @@ Router.prototype = {
     this.globalCb = cb || function () { };
     window.addEventListener('load', this.refresh.bind(this), false);
     window.addEventListener('hashchange', this.refresh.bind(this), false);
+    window.addEventListener('popstate', this.refresh.bind(this), false);
+    window.addEventListener('pushstate', this.refresh.bind(this), false);
   },
   push: function (route) {
     window.location.href = this.getUrlWithoutHash() + '#' + route;
