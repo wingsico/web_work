@@ -1,0 +1,65 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>图像画廊</title>
+   <style>
+     @keyframes scroll-loop {
+       0% {
+         left: 0;
+       }
+
+       100% {
+         left: calc(100% - 5*80px);
+       }
+     }
+     h2 {
+       text-align: center;
+     }
+
+     .window {
+       border: solid #88ffaa;
+       border-width: 3px 0;
+       position: relative;
+       height: 120px;
+     }
+
+     .gallery {
+       position: absolute;
+       top: 10px;
+       bottom: 10px;
+       animation: scroll-loop alternate infinite 5s linear;
+       font-size: 0;
+     }
+
+     .gallery:hover {
+       animation-play-state: paused;
+     }
+
+     .gallery img {
+       height: 100px;
+       width: 80px;
+     }
+
+     .gallery img:hover {
+       opacity: .5;
+     }
+
+   </style>
+ </head>
+ <body>
+   <h2>图像画廊</h2>
+   <div class="window"">
+     <div class="gallery">
+       <a href="./static/20181117-01.jpg" target="view_window"><img src="./static/20181117-01.jpg" alt="img1"></a>
+       <a href="./static/20181117-02.jpg" target="view_window"><img src="./static/20181117-02.jpg" alt="img2"></a>
+       <a href="./static/20181117-03.jpeg" target="view_window"><img src="./static/20181117-03.jpeg" alt="img3"></a>
+       <a href="./static/20181117-04.jpg" target="view_window"><img src="./static/20181117-04.jpg" alt="img4"></a>
+       <a href="./static/20181117-05.jpeg" target="view_window"><img src="./static/20181117-05.jpeg" alt="img5"></a>       
+     </div>
+   </div>
+   <audio src="./static/music.mp3" autoplay loop>no audio support!</audio>
+ </body>
+ </html>
