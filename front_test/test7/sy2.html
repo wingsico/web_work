@@ -31,7 +31,7 @@
 
       function clock() {
         const now = new Date();
-        const isPM = now.getHours() > 12
+        const isPM = now.getHours() > 12;
         const h = formatTime(now.getHours()%12);
         const m = formatTime(now.getMinutes());
         const s = formatTime(now.getSeconds());

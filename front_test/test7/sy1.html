@@ -97,6 +97,7 @@
   </div>
   <script>
     (function () {
+      const wrapper = document.querySelector('.wrapper');
       const departmentSelector = document.querySelector('#department');
       const selectWrapper = document.querySelector('.select-wrapper');
       const moveRightOne = document.querySelector('.move-right-one');
@@ -148,7 +149,7 @@
           renderDepartmentMembers();
         });
 
-        selectWrapper.addEventListener('click', (e) => {
+        wrapper.addEventListener('click', (e) => {
           if (Array.from(e.target.classList).includes('member')) {
             memberSelector(e.target);
           }
@@ -167,7 +168,6 @@
         moveLeftOne.addEventListener('click', (e) => {
           const selected = resultWrapper.querySelector(`.${selectedClass}`);
           selected && selectWrapper.appendChild(selected) && departmentsData[selectDepartment].push(selected.innerText);
-
         })
 
         moveLeftAll.addEventListener('click', (e) => {
@@ -177,15 +177,9 @@
         })
       }
 
-
-
-
       renderDepartments();
       renderDepartmentMembers();
-
       eventListenerController();
-
-
 
     })()
   </script>
