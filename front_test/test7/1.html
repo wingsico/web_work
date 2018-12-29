@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>1</title>
+</head>
+<body>
+  <script>
+    (function() {
+      const {title, URL, bgColor, lastModified, anchors, images, all} = document;
+      document.write(`
+        <p>文档标题:${title}</p>
+        <p>当前URL:${URL}</p>
+        <p>背景颜色:${bgColor}</p>
+        <p>锚链接的个数:${anchors.length}</p>
+        <p>图像的个数:${images.length}</p>
+        <p>所有标签:${[...all].map(ele => ele.tagName).join(',')}</p>
+      `)
+    })()
+  </script>
+</body>
+</html>

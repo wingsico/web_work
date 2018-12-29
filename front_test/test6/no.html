@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div class="container">
+    <input type="text" class="input" />
+    <button class="input-confirm">确定</button>
+  </div>
+  <script>
+    const input = document.querySelector('.input');
+    const inputConfirm = document.querySelector('.input-confirm');
+
+    function isNumber(text) {
+      return /^-?\d+\.?\d+$/.test(text);
+    }
+
+    function isEmail(text) {
+      return /^\w+@\w+\.\w+$/.test(text);5
+    }
+
+    inputConfirm.addEventListener('click', function() {
+      const value = input.value;
+      alert(isEmail(value));
+    })
+  </script>
+
+</body>
+</html>

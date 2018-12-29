@@ -1,0 +1,97 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  position: fixed;
+  bottom: 0;
+  top: 0;
+  width: 100%;
+  max-width: 375px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+}
+
+.number-board {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  background: rgba(0, 0, 0, .9);
+}
+
+.number-board .key {
+  width: 20%;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+  color: #fff;
+  height: 50px;
+  line-height: 50px;
+  font-size: 1.5em;
+  transition: all .3s;
+}
+
+.number-board .key.not-number {
+  color: rgba(255, 255, 255, .7);
+  font-weight: 400;
+  font-size: 1.3em;
+}
+
+.number-board .key.active::after {
+  background: rgba(0, 0, 0, .5);
+  opacity: 0.8;
+}
+
+.number-board .key.equal::after {
+  background: red;
+}
+
+.number-board .key::after {
+  content: attr(key);
+  height: 50px;
+  width: 50px;
+  text-align: center;
+  line-height: 50px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.display-board {
+  background: rgba(0, 0, 0, .8);
+  display: flex;
+  flex: 1;
+  font-family: 'menlo';
+}
+
+.display-board .overflow-wrapper {
+  margin: 20px 0 4px;
+  padding: 0 20px;
+  display: flex;
+  flex: 1;
+  overflow-y: auto;
+  flex-direction: column-reverse;
+  color: #fff;
+  font-size: 2.5em;
+  text-align: right;
+}
+
+.display-board .current-input-wrapper {
+  word-break: break-all;
+  word-wrap: wrap;
+}
+
+.display-board .history-input-wrapper {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 22px;
+  line-height: 2;
+}
+
+#snow {
+  position: absolute;
+  z-index: 11111;
+  pointer-events: none;
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>clock</title>
+  <style>
+    .container {
+      width: 200px;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid brown;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container"></div>
+  <script>
+    (function() {
+
+      const container = document.querySelector('.container');
+      function formatTime(number) {
+        return number < 10 ? `0${number}` : number;
+      }
+
+      function clock() {
+        const now = new Date();
+        const isPM = now.getHours() > 12
+        const h = formatTime(now.getHours()%12);
+        const m = formatTime(now.getMinutes());
+        const s = formatTime(now.getSeconds());
+
+        container.innerText = `现在是: ${h}:${m}:${s} ${isPM ? 'pm': 'am'}`;
+
+        requestAnimationFrame(clock)
+      }
+
+      requestAnimationFrame(clock);
+    })()
+  </script>
+</body>
+</html>

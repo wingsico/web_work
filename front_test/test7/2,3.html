@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>彩票投注</title>
+  <style>
+    .betting-box {
+      display: flex;
+      width: 350px;
+      line-height: 30px;
+    }
+
+    .bet-area>div:not(:last-of-type) {
+      margin-bottom: 5px;
+    }
+
+    .betting-box .random-numbers {
+      flex: 1;
+      text-align: center;
+      border: 1px solid #ccc;
+      margin: 0 10px;
+    }
+
+    .random-numbers li {
+      transition: all .3s;
+    }
+
+    .random-numbers li.select {
+      background-color: lightblue;
+      color: #fff;
+    }
+
+    .container {
+      display: flex;
+    }
+
+    .clear-area {
+      margin-left: 10px;
+    }
+
+    .clear-area button {
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="bet-area"></div>
+    <div class="clear-area"></div>
+  </div>
+  <script>
+    (function () {
+      function BettingBox({
+        parent,
+        times = 1,
+        length = 7,
+        max = 30,
+        min = 1,
+        title = '投注号码',
+        buttonText,
+      }) {
+        this.parent = parent;
+        this.length = length;
+        this.times = times;
+        this.bettings = [];
+        this.dom = null;
+        this.max = max;
+        this.min = min;
+        this.buttonText = buttonText ? buttonText : `投注${this.times}次`;
+        this.title = title;
+
+        this.randomNumbers = () => {
+          return new Array(this.length).fill().map(() => (Math.floor(Math.random() * (max + 1 - min) + min)));
+        }
+
+        this.bet = () => {
+          this.bettings = new Array(this.times).fill().map(() => this.randomNumbers());
+          this.reRender();
+        }
+
+        this.clear = () => {
+          this.bettings = [];
+          this.reRender();
+        }
+
+        this.reRender = () => {
+          if (this.dom) {
+            this.dom.querySelector('.random-numbers').innerHTML = `
+              <ul style="padding: 0; list-style: none; margin: 0" class="bet-list">
+                ${this.bettings.map((betting, i) => `<li ${i === 0 && "class=\"select\""}>${betting.join(' ')}</li>`).join('')}
+              </ul>
+            `;
+            this.dom.querySelector('.bet-list').addEventListener('click', this.toggleSelect);
+          }
+        }
+
+        this.deleteSelect = () => {
+          if (this.dom) {
+            const betList = this.dom.querySelector('.bet-list');
+            const select = betList.querySelector('.select');
+            if (betList && select) {
+              betList.removeChild(select);
+            }
+          }
+        }
+
+        this.toggleSelect = (e) => {
+          const betList = this.dom.querySelector('.bet-list');
+          const target = e.target;
+          if (target.tagName === 'LI') {
+            betList.querySelector('.select') && betList.querySelector('.select').classList.remove('select');
+            target.classList.add('select');
+          }
+        }
+
+        this.render = () => {
+          const domStr =
+            `
+            <div class="betting-box">
+              <div>${this.title}</div>
+              <div class="random-numbers" style="overflow: auto"></div>
+              <div class="actions" style="display: flex; flex-direction: column">
+                <button class="bet-button" style="flex: 1">${this.buttonText}</button>
+                <button class="clear-button" style="margin-top: 5px; flex: 1">删除</button>
+              </div>
+            </div>`
+          const dom = document.createElement('div');
+          dom.innerHTML = domStr;
+          dom.querySelector('.bet-button').addEventListener('click', this.bet);
+          dom.querySelector('.clear-button').addEventListener('click', this.deleteSelect)
+          this.dom = Array.from(dom.childNodes).find((node) => node.nodeType === 1);
+          parent.appendChild(this.dom)
+          this.reRender();
+        }
+      }
+
+
+      function ClearBox(parent, boxes = []) {
+        this.bettingBoxes = boxes;
+        this.parent = parent;
+        this.clear = () => {
+          this.bettingBoxes.forEach(box => box.clear());
+        }
+        this.render = () => {
+          const domStr = `<button class="clear-box">清除所有</button>`
+          const dom = document.createElement('div');
+          dom.innerHTML = domStr;
+          dom.querySelector('.clear-box').addEventListener('click', this.clear);
+          parent.appendChild(dom.firstChild);
+        }
+      }
+
+      const betArea = document.querySelector('.bet-area');
+      const clearArea = document.querySelector('.clear-area');
+      const bettingBoxes = [1, 5, 10].map((value) => new BettingBox({ parent: betArea, times: value }));
+      const clearBox = new ClearBox(clearArea, bettingBoxes);
+      bettingBoxes.forEach((box) => box.render());
+      clearBox.render();
+
+    })()
+  </script>
+</body>
+
+</html>

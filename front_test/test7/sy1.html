@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>选择员工</title>
+  <style>
+    .container {
+      border: 1px solid #ccc;
+      width: 700px;
+      margin: 50px auto;
+    }
+
+    header h1 {
+      font-size: 16px;
+      margin: 0 10px;
+    }
+
+    header {
+      border-bottom: 1px solid #ccc;
+    }
+
+    .selector {
+      padding: 3px 10px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .wrapper {
+      display: flex;
+      padding: 20px;
+    }
+
+    .wrapper>article:not([class="actions-wrapper"]) {
+      flex: 1;
+      height: 300px;
+      border: 1px solid #ccc;
+      padding: 10px 0;
+    }
+
+    .wrapper>article:not([class="actions-wrapper"]) .member {
+      padding: 0 10px;
+      box-sizing: border-box;
+      width: 100%;
+      cursor: default;
+    }
+
+    .member.selected {
+      background-color: deepskyblue;
+      color: #fff;
+    }
+
+    .wrapper .actions-wrapper {
+      width: 50px;
+      text-align: center;
+      margin: 0 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .wrapper .actions-wrapper button {
+      width: 100%;
+      height: 30px;
+      line-height: 30px;
+      border-radius: 15px;
+      outline: none;
+    }
+
+    .wrapper .actions-wrapper button:not(:first-child) {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>选择员工</h1>
+    </header>
+    <main>
+      <article class="selector">
+        <select name="department" id="department"></select>
+      </article>
+      <article class="wrapper">
+        <article class="select-wrapper"></article>
+        <article class="actions-wrapper">
+          <button class="move-right-one">&gt;</button>
+          <button class="move-right-all">&gt;&gt;&gt;</button>
+          <button class="move-left-one">&lt;</button>
+          <button class="move-left-all">&lt;&lt;&lt;</button>
+        </article>
+        <article class="result-wrapper"></article>
+      </article>
+    </main>
+  </div>
+  <script>
+    (function () {
+      const departmentSelector = document.querySelector('#department');
+      const selectWrapper = document.querySelector('.select-wrapper');
+      const moveRightOne = document.querySelector('.move-right-one');
+      const moveRightAll = document.querySelector('.move-right-all');
+      const moveLeftOne = document.querySelector('.move-left-one');
+      const moveLeftAll = document.querySelector('.move-left-all');
+      const resultWrapper = document.querySelector('.result-wrapper');
+      const selectedClass = 'selected';
+      const departmentsData = {
+        '销售部': ['李明', '李一', '李二', '李三'],
+        '研发部': ['老王', '小王', '大王'],
+        '运营部': ['小仔子', '大仔子', '老仔子']
+      }
+
+      let selectDepartment = Object.keys(departmentsData)[0];
+
+      const memberSelector = (function () {
+        let selector = null;
+        return function (ele) {
+          selector && selector.classList.remove(selectedClass);
+          ele.classList.add(selectedClass)
+          selector = ele;
+        }
+      })();
+
+      Array.prototype.delete = function(ele) {
+        this.includes(ele) && this.splice(this.indexOf(ele), 1);
+        return this;
+      }
+
+      Array.prototype.clear = function() {
+        this.length = 0;
+        return this;
+      }
+
+      function renderDepartments() {
+        departmentSelector.innerHTML = Object.keys(departmentsData).map((department) => `<option value="${department}">${department}</option>`).join('');
+      }
+
+      function renderDepartmentMembers() {
+        selectWrapper.innerHTML = departmentsData[selectDepartment].map((member) => `<div class="member">${member}</div>`).join('');
+      }
+
+
+
+      function eventListenerController() {
+        departmentSelector.addEventListener('change', (e) => {
+          selectDepartment = e.target.value;
+          renderDepartmentMembers();
+        });
+
+        selectWrapper.addEventListener('click', (e) => {
+          if (Array.from(e.target.classList).includes('member')) {
+            memberSelector(e.target);
+          }
+        })
+
+        moveRightOne.addEventListener('click', (e) => {
+          const selected = selectWrapper.querySelector(`.${selectedClass}`);
+          selected && resultWrapper.appendChild(selected) && departmentsData[selectDepartment].delete(selected.innerText);
+        })
+
+        moveRightAll.addEventListener('click', (e) => {
+          Array.from(selectWrapper.childNodes).forEach((node) => resultWrapper.appendChild(node));
+          departmentsData[selectDepartment].clear();
+        })
+
+        moveLeftOne.addEventListener('click', (e) => {
+          const selected = resultWrapper.querySelector(`.${selectedClass}`);
+          selected && selectWrapper.appendChild(selected) && departmentsData[selectDepartment].push(selected.innerText);
+
+        })
+
+        moveLeftAll.addEventListener('click', (e) => {
+          const ars = Array.from(resultWrapper.childNodes);
+          ars.forEach((node) => selectWrapper.appendChild(node));
+          departmentsData[selectDepartment].push(...ars.map(ar => ar.innerText));
+        })
+      }
+
+
+
+
+      renderDepartments();
+      renderDepartmentMembers();
+
+      eventListenerController();
+
+
+
+    })()
+  </script>
+</body>
+
+</html>

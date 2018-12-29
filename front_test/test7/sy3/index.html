@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="./simple_calendar/css/index.css">
+  <title>Calendar</title>
+  <style>
+    #container {
+      width: 300px;
+      margin: 50px auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container"></div>
+  <script src="./simple_calendar/index.js"></script>
+  <!-- 这个插件自己写的 github地址: https://github.com/wingsico/web_work/tree/master/calendar -->
+  <script>
+    (function () {
+      const container = document.querySelector('#container');
+      const options = {
+        el: container,
+        // theme: 'pink',
+        language: 'zh',
+        // headerHeight: '30px',
+        // width: '200px',
+        // headerFontSize: '20px',
+        // bodyPadding: '5px',
+        // shadow: 'none',
+      };
+
+      spc.init(options);
+    })()
+  </script>
+</body>
+
+</html>

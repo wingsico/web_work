@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>定位属性设置</title>
+  <style>
+    p {
+      color: blue;
+      font-size: 40px;
+      font-weight: bold;
+      position: relative;
+      font-family: "宋体";
+    }
+
+    p::after,
+    p::before {
+      content: attr(data-text);
+      font-size: inherit;
+      font-weight: inherit;
+      font-family: inherit;
+    }
+
+    p.pos-rel {
+      left: -240px;
+    }
+
+    p.pos-abs::before,
+    p.pos-abs::after {
+      position: absolute;
+    }
+
+    p.pos-rel::before,
+    p.pos-rel::after {
+      position: relative;
+    }
+
+    p::before {
+      color: yellow; 
+    }
+
+    p::after {
+      color: red;
+    }
+
+    p.pos-abs::before {
+      left: 10px;
+      top: 10px;
+    }
+
+    p.pos-abs::after {
+      left: 20px;
+      top: 20px;
+    }
+
+    p.pos-rel::before {
+      right: -250px;
+      top: 10px;
+    }
+
+    p.pos-rel::after {
+      left: -220px;
+      top: 20px;
+    }
+
+    
+
+    
+  </style>
+</head>
+<body>
+  <p data-text="定位属性示例" class="pos-abs">定位属性示例</p>
+
+  <p data-text="定位属性示例" class="pos-rel">定位属性示例</p>
+
+</body>
+</html>

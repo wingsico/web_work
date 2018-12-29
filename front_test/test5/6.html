@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>网站首页</title>
+  <style>
+    html,body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    a {
+      text-decoration: none;
+    }
+
+    .container {
+      min-height: 100%;
+      padding-bottom: 100px
+    }
+
+    header {
+      height: 300px;
+      background-color:coral;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    header > h1.title {
+      margin: 0;
+      font-size: 3em;
+    }
+
+    header > nav {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+
+    header > nav > .menu {
+      list-style: none;
+      display: flex;
+      width: 100%;
+      padding: 0;
+    }
+
+    .menu > .menu-item {
+      display: inline-block;
+      flex: 1;
+      text-align: center;
+    }
+
+    .menu-item > a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .menu-item > a:visited {
+      color:darkmagenta;
+    }
+
+    .menu-item > a:hover {
+      color:deepskyblue;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    main::after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+
+    main > aside {
+      float: right;
+      width: 200px;
+    }
+
+    main > article {
+      margin-right: 210px;
+    }
+
+    main > aside > nav > ul.aside-list {
+      list-style: none;
+      padding-left: 10px;
+    }
+
+    main > aside > .aside-title,
+    main > article > .article-title {
+      color: green;
+      font-weight: 400;
+    }
+
+    .aside-list > li {
+      line-height: 2;
+    }
+
+    .aside-list > li > a {
+      color:green;
+    }
+
+    .aside-list > li > a:hover {
+      opacity: .7;
+    }
+
+    .article-content {
+      padding-left: 10px;
+    }
+
+    .article-content > .content-title {
+      font-weight: 300;
+      color: green;
+      margin: 0;
+    }
+
+    .article-content dl {
+      margin:5px 0 0;
+    }
+
+    .article-content dl dt {
+      float: left;
+    }
+
+    .article-content dl {
+      font-size: 14px;
+    }
+
+    .article-content dl dd {
+      margin-bottom: 5px;
+    }
+
+    footer {
+      height: 100px;
+      margin-top: -100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: lightgray;
+    }
+
+
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <header>
+      <h1 class="title">一个网站的首页</h1>
+      <nav>
+        <ul class="menu">
+          <li class="menu-item"><a href="about:blank" target="_blank" rel="noopener noreferrer">首页</a></li>
+          <li class="menu-item"><a href="about:blank" target="_blank" rel="noopener noreferrer">页面1</a></li>
+          <li class="menu-item"><a href="about:blank" target="_blank" rel="noopener noreferrer">页面2</a></li>
+          <li class="menu-item"><a href="about:blank" target="_blank" rel="noopener noreferrer">页面3</a></li>
+          <li class="menu-item"><a href="about:blank" target="_blank" rel="noopener noreferrer">页面4</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <aside>
+        <h2 class="aside-title">边栏标题</h2>
+        <nav>
+          <ul class="aside-list">
+            <li><a href="#注册">在线注册</a></li>
+            <li><a href="#修改">修改信息</a></li>
+          </ul>
+        </nav>
+      </aside>
+      <article>
+        <h2 class="article-title">次标题</h2>
+        <article class="article-content">
+          <h3 class="content-title">三级标题</h3>
+          <dl>
+            <dt>时间</dt>
+            <dd>2018年11月19日</dd>
+            <dt>地点</dt>
+            <dd>江西省南昌市</dd>
+            <dt>主题</dt>
+            <dd>web前端web前端web前端web前端web前端web前端web前端web前端web前端web前端web前端web前端web前端web前端web前端</dd>
+            <dt>主办</dt>
+            <dd>信息工程学院计算机科学与技术165班</dd>
+          </dl>
+        </article>
+      </article>
+    </main>
+  </div>
+  <footer>@copyright wingsico 2018</footer>
+</body>
+</html>
